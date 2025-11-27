@@ -37,7 +37,7 @@ The steps to form an Ethernet connection with static IP address assignment are a
 
 3.  Open the port connecting the router to the switch on the router's CLI and assign it an IP address:
 
-|
+
 
         Router> enable\
         Router# configure terminal\
@@ -45,11 +45,11 @@ The steps to form an Ethernet connection with static IP address assignment are a
         Router(config-if)# no shutdown\
         Router(config-if)# ip address 192.168.2.1 255.255.255.0
 
- |
+ 
 
-1.  Assign the PC's interface an IP address from its configuration tab (for example: IPv4 address 192.168.2.2, subnet mask 255.255.255.0).
+5.  Assign the PC's interface an IP address from its configuration tab (for example: IPv4 address 192.168.2.2, subnet mask 255.255.255.0).
 
-2.  Ping the router from the PC's command prompt to verify connectivity:
+6.  Ping the router from the PC's command prompt to verify connectivity:
 
          ping 192.168.2.1
 
@@ -77,9 +77,7 @@ The steps to form a wireless connection with static IP address assignment are as
 
         Router(config-if)# ip address 192.168.5.1 255.255.255.0
 
-Enable DHCP on the router for the wireless network:
-
-|
+4. Enable DHCP on the router for the wireless network:
 
       Router> enable\
       Router# configure terminal\
@@ -90,7 +88,7 @@ Enable DHCP on the router for the wireless network:
 
 (Note: The 8.8.8.8 dns-server here acts as a placeholder until an actual DNS server is configured later in the project)
 
- |
+ 
 
 1.  Ping the router from the PC's command prompt to verify connectivity:
 
@@ -157,7 +155,7 @@ From the 192.168.2.0/24 network,
 
 If devices within each VLAN receive IP addresses and successful ping responses, the VLAN configuration and routing setup are functioning correctly.
 
-Routing \\
+Routing
 ----------
 
 Initially, the network was going to be designed as a ring topology, with each router being connected to the one before it and next to it. There would be a server hosting DNS and HTTP/HTTPS in order to simulate the Internet connected to one of these servers. However, this isn't how the real Internet works, and if one router stops working, the entire network collapses. Instead, the improved network operates on a star topology, using a central router to forward information between routers instead of direct router-to-router connections. This central router is meant to be the "Internet" and simulate multiple hops across the Internet to reach the desired router.
