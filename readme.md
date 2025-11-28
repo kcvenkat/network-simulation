@@ -37,16 +37,14 @@ The steps to form an Ethernet connection with static IP address assignment are a
 
 3.  Open the port connecting the router to the switch on the router's CLI and assign it an IP address:
 
-
-
-        Router> enable\
-        Router# configure terminal\
-        Router(config)# interface GigabitEthernet0/0/0\
-        Router(config-if)# no shutdown\
+```
+    Router> enable
+      Router# configure terminal
+        Router(config)# interface GigabitEthernet0/0/0
+        Router(config-if)# no shutdown
         Router(config-if)# ip address 192.168.2.1 255.255.255.0
-
+```
  
-
 5.  Assign the PC's interface an IP address from its configuration tab (for example: IPv4 address 192.168.2.2, subnet mask 255.255.255.0).
 
 6.  Ping the router from the PC's command prompt to verify connectivity:
@@ -67,30 +65,28 @@ The steps to form a wireless connection with static IP address assignment are as
 
 3.  Open the port connecting the router to the switch on the router's CLI and assign it an IP address:
 
-        Router> enable
-
-        Router# configure terminal
-
-        Router(config)# interface GigabitEthernet0/0/0
-
+```
+    Router> enable
+      Router# configure terminal
+        Router(config)# interface GigabitEthernet0/0/0
         Router(config-if)# no shutdown
-
         Router(config-if)# ip address 192.168.5.1 255.255.255.0
+```
 
 4. Enable DHCP on the router for the wireless network:
-
-      Router> enable\
-      Router# configure terminal\
-      Router(config)# ip dhcp pool LAW_GUEST\
-      Router(dhcp-config)# network 192.168.5.0 255.255.255.0\
-      Router(dhcp-config)# default-router 192.168.5.1\
-      Router(dhcp-config)# dns-server 8.8.8.8
+   
+```
+      Router> enable
+        Router# configure terminal
+          Router(config)# ip dhcp pool LAW_GUEST
+            Router(dhcp-config)# network 192.168.5.0 255.255.255.0
+            Router(dhcp-config)# default-router 192.168.5.1
+            Router(dhcp-config)# dns-server 8.8.8.8
+```
 
 (Note: The 8.8.8.8 dns-server here acts as a placeholder until an actual DNS server is configured later in the project)
 
- 
-
-1.  Ping the router from the PC's command prompt to verify connectivity:
+5.  Ping the router from the PC's command prompt to verify connectivity:
 
         ping 192.168.5.1
 
@@ -102,40 +98,37 @@ VLANs (Virtual Local Area Networks) allow network administrators to logically se
 
 The following steps describe how to create VLANs, assign ports, and configure router subinterfaces for inter-VLAN communication.
 
-Create VLANs on the switch
+1. Create VLANs on the switch
 
-       Switch> enable
+```
+    Switch> enable
+      Switch# configure terminal
+        Switch(config)# vlan 2
+        Switch(config)# name HR
+        Switch(config)# exit
+```
 
-       Switch# configure terminal
+2. Assign switch ports to VLANs
 
-       Switch(config)# vlan 2
-
-       Switch(config)# name HR
-
-       Switch(config)# exit
-
-Assign switch ports to VLANs
-
-       Switch(config)# interface FastEthernet0/1
-
-       Switch(config-if)# switchport mode access
-
-       Switch(config-if)# switchport access vlan 2
-
-       Switch(config)# interface FastEthernet0/4-7
-
-       Switch(config-if)# switchport mode access
-
-       Switch(config-if)# switchport access vlan 3
+```
+    Switch(config)# interface FastEthernet0/1
+      Switch(config-if)# switchport mode access
+      Switch(config-if)# switchport access vlan 2
+    Switch(config)# interface FastEthernet0/4-7
+      Switch(config-if)# switchport mode access
+      Switch(config-if)# switchport access vlan 3
+```
 
 Configure router subinterfaces for inter-VLAN routing (Router-on-a-Stick)
 
- Router> enable\
+```
+ Router> enable
       Router# configure terminal\
-      Router(config)# interface GigabitEthernet0/0/0.2\
-      Router(config-subif)# encapsulation dot1Q 2\
-      Router(config-subif)# ip address 192.168.2.1 255.255.255.0\
-      Router(config-subif)# exit
+        Router(config)# interface GigabitEthernet0/0/0.2\
+          Router(config-subif)# encapsulation dot1Q 2\
+          Router(config-subif)# ip address 192.168.2.1 255.255.255.0\
+          Router(config-subif)# exit
+```
 
 (Note: It's generally best practice to number the subinterfaces after the VLAN number for clarity and convention)
 
@@ -147,11 +140,15 @@ From a device within each VLAN, ping the other VLAN.
 
 Ex. from the 192.168.3.0/24 network,
 
-        ping 192.168.2.2
+```
+    ping 192.168.2.2
+```
 
 From the 192.168.2.0/24 network,
 
-        ping 192.168.3.2
+```
+    ping 192.168.3.2
+```
 
 If devices within each VLAN receive IP addresses and successful ping responses, the VLAN configuration and routing setup are functioning correctly.
 
@@ -164,13 +161,11 @@ Internal Configuration:
 
 The configuration on the internal router which hosts the private 192.168.x.x networks is simple. Only the following command needs to be passed to the CLI:
 
-|
-
-Router>enable\
-Router# configure terminal\
-Router(config)# ip route 0.0.0.0 0.0.0.0 79.52.164.1 
-
- |
+```
+    Router>enable
+      Router# configure terminal 
+        Router(config)# ip route 0.0.0.0 0.0.0.0 79.52.164.1 \
+```
 
 This command sends traffic to any unknown network (0.0.0.0/0) to the central router, 79.52.164.1. This configuration is necessary on every internal router.
 
@@ -178,19 +173,20 @@ Edge Configuration:
 
 The edge router meant to simulate the Internet needs to know the networks underneath each of the internal routers and the WAN address of the router. This edge router functions as the ISP, managing external routing and simulating how local organizations connect to the Internet. Let's say, for example, that all the routers exist on the network 79.52.164.0/24. For this example, let's use the Law Firm Topology's router, which hosts the networks 192.168.2.0/24, 192.168.3.0/24, 192.168.4.0/24, and 192.168.5.0/24. The Law Router's WAN address is 79.52.164.8. The following commands need to be executed on the edge router's CLI.
 
-Router>enable\
-Router# configure terminal\
-Router(config)# ip route 192.168.2.0 255.255.255.0 79.52.164.8
-
-Router(config)# ip route 192.168.3.0 255.255.255.0 79.52.164.8
-
-Router(config)# ip route 192.168.4.0 255.255.255.0 79.52.164.8
-
-Router(config)# ip route 192.168.5.0 255.255.255.0 79.52.164.8
+```
+    Router>enable
+      Router# configure terminal
+        Router(config)# ip route 192.168.2.0 255.255.255.0 79.52.164.8
+        Router(config)# ip route 192.168.3.0 255.255.255.0 79.52.164.8
+        Router(config)# ip route 192.168.4.0 255.255.255.0 79.52.164.8
+        Router(config)# ip route 192.168.5.0 255.255.255.0 79.52.164.8
+```
 
 This configuration must be performed on the edge router's CLI for all the internal routers and their respective private networks. Because of the intense cabling, the edge router uses the "router on a stick" method to connect all the cables to a switch, which then connects everything back into the edge router. Once the cabling is established, the entire network should be able to communicate. Ping tests can be run from one private network under one internal router to another private network under another. For example, the following executed on 192.168.2.2's command prompt under Law Router tests connectivity to 192.168.40.3 under Tech Router.
 
-ping 192.168.40.3
+```
+    ping 192.168.40.3
+```
 
 Running tests like this from each subnet to every other subnet confirms the established communication between the entire small town network.
 
@@ -211,9 +207,10 @@ Configure the DNS
 
 After enabling the DNS service on the server, it's time to map a domain name to an IP address. In order to improve the searchability of the website, I mapped both [http://readme.com](https://readme.com) and [readme.com](http://readme.com) to the 79.52.164.250 server. Note that this server is on the same network as the router system. After configuring the DNS on the server, each device needs to point to 79.52.164.250 as its DNS server before being able to access the website through the domain name. In order to do this, I went back and set each device's DNS server to 79.52.164.250 using the config tab on the PCs and Laptops. For DHCP servers, entering DHCP config on the router's CLI and setting the dns-server to 79.52.164.250 is necessary.
 
-Router(config)# ip dhcp pool LAN_POOL
-
-Router(dhcp-config)# dns-server 79.52.164.250
+```
+    Router(config)# ip dhcp pool LAN_POOL
+      Router(dhcp-config)# dns-server 79.52.164.250
+```
 
 Once the DNS server is properly configured, every device on every network should be able to access the domain name ([readme.com](http://readme.com) in this case). This can be more efficiently tested by going into a web browser on a device in every private network and attempting to connect to [readme.com](http://readme.com).
 
