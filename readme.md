@@ -123,10 +123,10 @@ Configure router subinterfaces for inter-VLAN routing (Router-on-a-Stick)
 
 ```
  Router> enable
-      Router# configure terminal\
-        Router(config)# interface GigabitEthernet0/0/0.2\
-          Router(config-subif)# encapsulation dot1Q 2\
-          Router(config-subif)# ip address 192.168.2.1 255.255.255.0\
+      Router# configure terminal
+        Router(config)# interface GigabitEthernet0/0/0.2
+          Router(config-subif)# encapsulation dot1Q 2
+          Router(config-subif)# ip address 192.168.2.1 255.255.255.0
           Router(config-subif)# exit
 ```
 
@@ -164,7 +164,7 @@ The configuration on the internal router which hosts the private 192.168.x.x net
 ```
     Router>enable
       Router# configure terminal 
-        Router(config)# ip route 0.0.0.0 0.0.0.0 79.52.164.1 \
+        Router(config)# ip route 0.0.0.0 0.0.0.0 79.52.164.1
 ```
 
 This command sends traffic to any unknown network (0.0.0.0/0) to the central router, 79.52.164.1. This configuration is necessary on every internal router.
