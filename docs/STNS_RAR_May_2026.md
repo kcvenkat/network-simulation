@@ -9,7 +9,7 @@
 | Version | Date | Sections Modified | Description of Changes |
 |---|---|---|---|
 | 1.0 | 13 May 2026 | Initial RAR | |
-| 2.0 | 19 May 2026 | Controls Implemented | Documented implemented controls to mitigate NIST SP 800-53 non-compliance. |
+| 1.1 | 19 May 2026 | Controls Implemented | Documented implemented controls to mitigate NIST SP 800-53 non-compliance. |
 
 ---
 
