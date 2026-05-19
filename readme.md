@@ -5,7 +5,7 @@ This is a simulation of a small town's network designed to simulate realistic pr
 
 ## Table of Contents
 
--[Usage](#usage)
+- [Usage](#usage)
 - [Planning](#planning)
 - [Ethernet Networks](#ethernet-networks)
 - [Wireless Networks](#wireless-networks)
