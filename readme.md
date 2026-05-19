@@ -5,6 +5,7 @@ This is a simulation of a small town's network designed to simulate realistic pr
 
 ## Table of Contents
 
+-[Usage](#usage)
 - [Planning](#planning)
 - [Ethernet Networks](#ethernet-networks)
 - [Wireless Networks](#wireless-networks)
@@ -15,6 +16,49 @@ This is a simulation of a small town's network designed to simulate realistic pr
 - [Risk Assessment](#risk-assessment)
 - [Conclusion](#conclusion)
 
+---
+# Usage
+
+This project is designed to be opened and interacted with through Cisco Packet Tracer. The included `.pkt` file contains the complete simulated town network topology, including all routers, switches, VLAN configurations, ACLs, NAT/PAT rules, DMZ architecture, DHCP pools, DNS services, and ASA firewall configurations described in this documentation.
+
+## Requirements
+
+- Cisco Packet Tracer
+- Recommended version: Packet Tracer 8.x or newer
+
+## Running the Simulation
+
+1. Download the `.pkt` file from this repository.
+2. Open the file using Cisco Packet Tracer.
+3. Allow the topology and services to fully initialize.
+4. Test connectivity between networks using:
+   - `ping`
+   - web browser HTTP requests
+   - DNS lookups
+   - inter-VLAN routing tests
+5. Inspect router, switch, and ASA configurations through the CLI to review:
+   - VLAN assignments
+   - Router-on-a-Stick subinterfaces
+   - NAT/PAT rules
+   - ACL filtering
+   - DHCP pools
+   - DMZ segmentation
+   - ASA firewall behavior
+
+## Included Features
+
+- VLAN segmentation
+- Router-on-a-Stick inter-VLAN routing
+- DHCP and DNS services
+- Wired and wireless LANs
+- NAT/PAT implementation
+- Static NAT for public services
+- Extended ACL perimeter filtering
+- DMZ architecture
+- Cisco ASA 5506-X firewall configuration
+- Star topology backbone simulation
+- NIST SP 800-30 risk assessment
+- NIST SP 800-53 security control remediation
 ---
 
 # Planning
